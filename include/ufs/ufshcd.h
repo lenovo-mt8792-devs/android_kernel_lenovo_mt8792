@@ -1253,7 +1253,11 @@ static inline bool ufshcd_is_auto_hibern8_enabled(struct ufs_hba *hba)
 
 static inline bool ufshcd_is_wb_allowed(struct ufs_hba *hba)
 {
+#ifdef WT_COMPILE_FACTORY_VERSION
+	return false;
+#else
 	return hba->caps & UFSHCD_CAP_WB_EN;
+#endif
 }
 
 static inline bool ufshcd_enable_wb_if_scaling_up(struct ufs_hba *hba)

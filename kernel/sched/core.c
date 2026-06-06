@@ -5826,10 +5826,6 @@ void scheduler_tick(void)
 		mtk_irq_log_store(__func__, __LINE__);
 #endif
 	rq_lock(rq, &rf);
-#if IS_ENABLED(CONFIG_MTK_IRQ_MONITOR_DEBUG)
-	if (mtk_irq_log_store)
-		mtk_irq_log_store(__func__, __LINE__);
-#endif
 
 	curr = rq->curr;
 	psi_account_irqtime(rq, curr, NULL);
@@ -9701,6 +9697,9 @@ static void balance_push(struct rq *rq)
 	 * which kthread_is_per_cpu() and will push this task away.
 	 */
 	raw_spin_rq_lock(rq);
+#if IS_ENABLED(CONFIG_MTK_IRQ_MONITOR_DEBUG)
+	preempt_enable();
+#endif
 }
 
 static void balance_push_set(int cpu, bool on)

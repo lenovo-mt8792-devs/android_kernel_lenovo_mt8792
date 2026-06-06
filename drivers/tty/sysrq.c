@@ -272,7 +272,9 @@ static void sysrq_handle_showallcpus(int key)
 			show_regs(regs);
 		else
 			show_stack(NULL, NULL, KERN_INFO);
-
+#ifdef CONFIG_MTK_PANIC_ON_WARN
+		preempt_enable();
+#endif
 		schedule_work(&sysrq_showallcpus);
 		put_cpu();
 	}

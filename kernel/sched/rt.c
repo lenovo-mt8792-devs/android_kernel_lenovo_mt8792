@@ -2270,10 +2270,6 @@ retry:
 			raw_spin_rq_unlock(rq);
 			stop_one_cpu_nowait(rq->cpu, push_cpu_stop,
 					    push_task, &rq->push_work);
-#if IS_ENABLED(CONFIG_MTK_IRQ_MONITOR_DEBUG)
-			if (mtk_irq_log_store)
-				mtk_irq_log_store(__func__, __LINE__);
-#endif
 			preempt_enable();
 			raw_spin_rq_lock(rq);
 #if IS_ENABLED(CONFIG_MTK_IRQ_MONITOR_DEBUG)

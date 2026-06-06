@@ -1106,6 +1106,29 @@ KBUILD_CFLAGS   += $(call cc-option,-Werror=designated-init)
 # change __FILE__ to the relative path from the srctree
 KBUILD_CPPFLAGS += $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
 
+ifeq ($(WT_FINAL_RELEASE), yes)
+$(warning "debug Makefile WT_FINAL_RELEASE: $(WT_FINAL_RELEASE)")
+KBUILD_CFLAGS += -DWT_FINAL_RELEASE
+endif
+
+
+ifeq ($(WT_COMPILE_FACTORY_VERSION), yes)
+$(warning "debug Makefile WT_COMPILE_FACTORY_VERSION: $(WT_COMPILE_FACTORY_VERSION)")
+KBUILD_CFLAGS += -DWT_COMPILE_FACTORY_VERSION
+endif
+
+$(warning "debug Makefile WT_COMPILE_TARGET_PRODUCT_NAME: $(WT_COMPILE_TARGET_PRODUCT_NAME)")
+ifeq ($(WT_COMPILE_TARGET_PRODUCT_NAME), P98300AA1)
+KBUILD_CFLAGS += -DWT_COMPILE_KERNEL_TARGET_PRODUCT_5G
+$(warning "debug Makefile WT_COMPILE_KERNEL_TARGET_PRODUCT_5G")
+else ifeq ($(WT_COMPILE_TARGET_PRODUCT_NAME), P98300GA1)
+KBUILD_CFLAGS += -DWT_COMPILE_KERNEL_TARGET_PRODUCT_COMMERCIAL_WIFI
+$(warning "debug Makefile WT_COMPILE_KERNEL_TARGET_PRODUCT_COMMERCIAL_WIFI")
+else
+KBUILD_CFLAGS += -DWT_COMPILE_KERNEL_TARGET_PRODUCT_WIFI
+$(warning "debug Makefile WT_COMPILE_KERNEL_TARGET_PRODUCT_WIFI")
+endif
+
 # include additional Makefiles when needed
 include-y			:= scripts/Makefile.extrawarn
 include-$(CONFIG_DEBUG_INFO)	+= scripts/Makefile.debug

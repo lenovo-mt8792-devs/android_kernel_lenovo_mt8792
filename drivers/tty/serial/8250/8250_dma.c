@@ -11,6 +11,7 @@
 
 #include "8250.h"
 
+
 static void __dma_tx_complete(void *param)
 {
 	struct uart_8250_port	*p = param;
@@ -84,6 +85,7 @@ int serial8250_tx_dma(struct uart_8250_port *p)
 	struct dma_async_tx_descriptor	*desc;
 	struct uart_port		*up = &p->port;
 	int ret;
+
 
 	if (dma->tx_running) {
 		if (up->x_char) {
@@ -258,7 +260,6 @@ int serial8250_request_dma(struct uart_8250_port *p)
 	}
 
 	dev_dbg_ratelimited(p->port.dev, "got both dma channels\n");
-
 	return 0;
 err:
 	dma_release_channel(dma->txchan);
